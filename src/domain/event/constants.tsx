@@ -210,6 +210,7 @@ export const TEXT_EDITOR_ALLOWED_TAGS: string[] = [
   'br',
   'div',
   'em',
+  'figure',
   'h1',
   'h2',
   'h3',
@@ -222,6 +223,12 @@ export const TEXT_EDITOR_ALLOWED_TAGS: string[] = [
   'p',
   'span',
   'strong',
+  'table',
+  'tbody',
+  'td',
+  'th',
+  'thead',
+  'tr',
   'ul',
 ];
 

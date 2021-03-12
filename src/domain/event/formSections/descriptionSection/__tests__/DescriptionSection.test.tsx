@@ -91,11 +91,11 @@ const findComponent = (
   switch (key) {
     case 'descriptionFi':
       return screen.findByRole('textbox', {
-        name: /tapahtuman kuvaus suomeksi/i,
+        name: /Rikas tekstieditori, main/i,
       });
     case 'descriptionSv':
       return screen.findByRole('textbox', {
-        name: /tapahtuman kuvaus ruotsiksi/i,
+        name: /Rikas tekstieditori, main/i,
       });
     case 'fiButton':
       return screen.findByRole('tab', { name: /suomi/i });

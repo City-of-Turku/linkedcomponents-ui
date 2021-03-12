@@ -110,7 +110,7 @@ const findComponent = async (
       return addImageButtons[0];
     case 'description':
       return screen.findByRole('textbox', {
-        name: /tapahtuman kuvaus suomeksi/i,
+        name: /Rikas tekstieditori, main/i,
       });
     case 'endTime':
       return screen.findByRole('textbox', { name: /tapahtuma päättyy/i });
@@ -340,6 +340,7 @@ describe('save draft event', () => {
 });
 
 test('should route to event completed page after publishing event', async () => {
+  console.error = jest.fn();
   advanceTo('2020-12-20');
 
   const mocks: MockedResponse[] = [
@@ -366,8 +367,8 @@ test('should route to event completed page after publishing event', async () => 
   const secondStartTimeTextbox = await findComponent('secondStartTime');
   const secondEndTimeTextbox = await findComponent('secondEndTime');
 
+  userEvent.click(descriptionTextbox);
   pasteToTextEditor(descriptionTextbox, eventValues.description);
-  userEvent.dblClick(descriptionTextbox);
 
   const textboxes = [
     {
