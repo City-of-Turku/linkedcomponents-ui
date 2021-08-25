@@ -1,4 +1,5 @@
 import { TFunction } from 'i18next';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   EventFieldsFragment,
@@ -76,6 +77,8 @@ export const parseEventServerErrors = ({
       case 'description':
       case 'short_description':
         return parseLocalizedServerError({ error, key });
+      case 'external_links':
+        return parseExternalLinkServerError({ error, key });
       case 'videos':
         return parseVideoServerError(error);
       default:
@@ -112,6 +115,27 @@ export const parseEventServerErrors = ({
         ],
         []
       );
+    } else {
+      return [];
+    }
+  }
+
+  // Get error items for video fields
+  function parseExternalLinkServerError({
+    error,
+    key,
+  }: {
+    error: LEServerError;
+    key: string;
+  }): ServerErrorItem[] {
+    /* istanbul ignore else */
+    if (Array.isArray(error)) {
+      return error
+        .filter((e) => !isEmpty(e))
+        .map((e) => ({
+          label: parseEventServerErrorLabel({ key }),
+          message: parseEventServerErrorMessage({ error: e.link as string[] }),
+        }));
     } else {
       return [];
     }
@@ -160,6 +184,46 @@ export const parseEventServerErrors = ({
         return t(`event.form.titlePriceInfo.${eventType}`);
       default:
         return t(`event.form.label${pascalCase(key)}`);
+    }
+  }
+
+  // LE returns always error message in a single language, so use i18n to translate
+  // error message to used UI language
+  function parseEventServerErrorMessage(error: LEServerError): string {
+    let errorStr = '';
+
+    if (Array.isArray(error)) {
+      const e =
+        typeof error[0] === 'object'
+          ? Object.values(error[0]).find((item) => item)
+          : error[0];
+      errorStr = Array.isArray(e) ? e[0] : e;
+    } else {
+      const e = Object.values(error).find((item) => item);
+      errorStr = Array.isArray(e) ? e[0] : e;
+    }
+
+    switch (errorStr) {
+      case 'Could not find all objects to update.':
+        return t(`event.serverError.notFoundAllObjects`);
+      case 'End time cannot be in the past. Please set a future end time.':
+        return t(`event.serverError.endTimeInPast`);
+      case 'Price info must be specified before an event is published.':
+        return t(`event.serverError.offersIsRequired`);
+      case 'Short description length must be 160 characters or less':
+        return t(`event.serverError.shortDescriptionTooLong`);
+      case 'Syötä oikea URL-osoite.':
+        return t(`event.serverError.invalidUrl`);
+      case 'The name must be specified.':
+        return t(`event.serverError.nameIsRequired`);
+      case 'This field must be specified before an event is published.':
+        return t(`event.serverError.requiredWhenPublishing`);
+      case 'Tämä kenttä ei voi olla tyhjä.':
+        return t(`event.serverError.required`);
+      case 'Tämän luvun on oltava vähintään 0.':
+        return t(`event.serverError.min0`);
+      default:
+        return errorStr;
     }
   }
 };
