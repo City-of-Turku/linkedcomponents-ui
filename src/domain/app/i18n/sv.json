@@ -1114,7 +1114,8 @@
     "skipToContentLabel": "Gå till innehållet",
     "tabs": {
       "events": "Evenemang",
-      "help": "Stöd"
+      "help": "Stöd",
+      "admin": "Administration"
     }
   },
   "notFound": {

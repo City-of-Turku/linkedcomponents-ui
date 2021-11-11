@@ -1114,7 +1114,8 @@
     "skipToContentLabel": "Skip to content",
     "tabs": {
       "events": "Events",
-      "help": "Support"
+      "help": "Support",
+      "admin": "Administration"
     }
   },
   "notFound": {

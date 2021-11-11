@@ -1114,7 +1114,8 @@
     "skipToContentLabel": "Siirry sisältöön",
     "tabs": {
       "events": "Tapahtumat",
-      "help": "Tuki"
+      "help": "Tuki",
+      "admin": "Hallinta"
     }
   },
   "notFound": {
