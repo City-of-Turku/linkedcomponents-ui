@@ -1,9 +1,4 @@
-import {
-  IconCogwheel,
-  IconHome,
-  IconLayers,
-  IconQuestionCircle,
-} from 'hds-react';
+import { IconHome } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
@@ -42,99 +37,36 @@ const AdminPageLayout: React.FC<Props> = ({ children }) => {
     return pathname === localePath;
   };
 
-  const instructionsSubLevels = [
+  const administrationSubLevels = [
     {
-      label: t('helpPage.sideNavigation.labelGeneral'),
-      to: getLocalePath(ROUTES.INSTRUCTIONS_GENERAL),
+      label: t('adminPage.sideNavigation.organizations'),
+      to: getLocalePath(ROUTES.ADMIN_ORGANIZATIONS),
     },
     {
-      label: t('helpPage.sideNavigation.labelPlatform'),
-      to: getLocalePath(ROUTES.INSTRUCTIONS_PLATFORM),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelControlPanel'),
-      to: getLocalePath(ROUTES.INSTRUCTIONS_CONTROL_PANEL),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelFaq'),
-      to: getLocalePath(ROUTES.INSTRUCTIONS_FAQ),
-    },
-  ];
-
-  const technologySubLevels = [
-    {
-      label: t('helpPage.sideNavigation.labelGeneral'),
-      to: getLocalePath(ROUTES.TECHNOLOGY_GENERAL),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelApi'),
-      to: getLocalePath(ROUTES.TECHNOLOGY_API),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelImageRights'),
-      to: getLocalePath(ROUTES.TECHNOLOGY_IMAGE_RIGHTS),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelSourceCode'),
-      to: getLocalePath(ROUTES.TECHNOLOGY_SOURCE_CODE),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelDocumentation'),
-      to: getLocalePath(ROUTES.TECHNOLOGY_DOCUMENTATION),
-    },
-  ];
-
-  const supportSubLevels = [
-    {
-      label: t('helpPage.sideNavigation.labelTermsOfUse'),
-      to: getLocalePath(ROUTES.SUPPORT_TERMS_OF_USE),
-    },
-    {
-      label: t('helpPage.sideNavigation.labelContact'),
-      to: getLocalePath(ROUTES.SUPPORT_CONTACT),
+      label: t('adminPage.sideNavigation.users'),
+      to: getLocalePath(ROUTES.ADMIN_USERS),
     },
   ];
 
   const levels = [
     {
       icon: <IconHome />,
-      label: t('helpPage.sideNavigation.labelInstructions'),
-      subLevels: instructionsSubLevels,
-      to: getLocalePath(ROUTES.INSTRUCTIONS),
+      label: t('adminPage.sideNavigation.administration'),
+      subLevels: administrationSubLevels,
+      to: getLocalePath(ROUTES.ADMIN),
       type: 'toggle',
-    },
-    {
-      icon: <IconCogwheel />,
-      label: t('helpPage.sideNavigation.labelTechnology'),
-      subLevels: technologySubLevels,
-      to: getLocalePath(ROUTES.TECHNOLOGY),
-      type: 'toggle',
-    },
-    {
-      icon: <IconQuestionCircle />,
-      label: t('helpPage.sideNavigation.labelSupport'),
-      subLevels: supportSubLevels,
-      to: getLocalePath(ROUTES.SUPPORT),
-      type: 'toggle',
-    },
-    {
-      icon: <IconLayers />,
-      label: t('helpPage.sideNavigation.labelFeatures'),
-      subLevels: [],
-      to: getLocalePath(ROUTES.FEATURES),
-      type: 'link',
     },
   ];
 
   return (
-    <div className={styles.helpPageWrapper}>
+    <div className={styles.adminPageWrapper}>
       <Container>
-        <div className={styles.helpPageLayout}>
+        <div className={styles.adminPageLayout}>
           <div className={styles.sideNavigation}>
             <div style={{ top: sideNavigationTop }}>
               <SideNavigation
                 toggleButtonLabel={t(
-                  'helpPage.sideNavigation.toggleButtonLabel'
+                  'adminPage.sideNavigation.toggleButtonLabel'
                 )}
               >
                 {levels.map(

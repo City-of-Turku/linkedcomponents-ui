@@ -20,6 +20,8 @@ export enum DEPRECATED_ROUTES {
 
 export enum ROUTES {
   ADMIN = '/admin',
+  ADMIN_ORGANIZATIONS = '/admin/organizations',
+  ADMIN_USERS = '/admin/users',
   CALLBACK = '/callback',
   CREATE_EVENT = '/events/create',
   EDIT_EVENT = '/events/edit/:id',

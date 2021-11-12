@@ -1040,6 +1040,14 @@
       "toggleButtonLabel": "Navigate to help page"
     }
   },
+  "adminPage": {
+    "sideNavigation": {
+      "administration": "Administration",
+      "organizations": "Organizations",
+      "users": "Users",
+      "toggleButtonLabel": "Navigate to admin page"
+    }
+  },
   "image": {
     "warningLogInToUpdate": "Sign in to edit this image.",
     "warningLogInToUpload": "Sign in to add images.",

@@ -1,12 +1,12 @@
 @import 'breakpoints';
 @import 'mixins';
 
-.helpPageWrapper {
+.adminPageWrapper {
   width: 100%;
   background-color: var(--color-white);
 }
 
-.helpPageLayout {
+.adminPageLayout {
   display: grid;
   grid-gap: var(--spacing-m);
 

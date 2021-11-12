@@ -21,6 +21,7 @@ const EventSearchPage = React.lazy(
   () => import('../../eventSearch/EventSearchPage')
 );
 const HelpPageRoutes = React.lazy(() => import('./HelpPageRoutes'));
+const AdminPageRoutes = React.lazy(() => import('./AdminPageRoutes'));
 
 interface Params {
   locale: Language;
@@ -109,7 +110,7 @@ const LocaleRoutes: React.FC<Props> = ({
           </Route>
           <Route path={getLocalePath(ROUTES.ADMIN)}>
             <AdminPageLayout>
-              <HelpPageRoutes locale={locale} />
+              <AdminPageRoutes locale={locale} />
             </AdminPageLayout>
           </Route>
           <Route component={NotFound} />
