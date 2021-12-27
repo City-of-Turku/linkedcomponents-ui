@@ -1,44 +1,69 @@
-import React from 'react';
+import { Table } from 'hds-react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import useLocale from '../../../hooks/useLocale';
-import { Language } from '../../../types';
+import { UserFieldsFragment, useUsersQuery } from '../../../generated/graphql';
+import getPathBuilder from '../../../utils/getPathBuilder';
 import PageWrapper from '../../app/layout/PageWrapper';
+import { usersPathBuilder } from '../../user/utils';
 
 const UsersAdminPage: React.FC = () => {
-  const locale = useLocale();
+  const { t } = useTranslation();
+  const cols = [
+    { key: 'id', headerName: 'Not rendered' },
+    { key: 'username', headerName: 'Username', isSortable: true },
+    { key: 'email', headerName: 'E-Mail', isSortable: true },
+    { key: 'firstName', headerName: 'First name', isSortable: true },
+    { key: 'lastName', headerName: 'Last name', isSortable: true },
+    // TODO: Rooli. Mistä pitäisi päätellä? Ei määritelty.
+    {
+      key: '',
+      headerName: '',
+      transform: () => {
+        return <button>Muokkaa</button>;
+      },
+    },
+  ];
 
-  const getContent = (locale: Language) => {
-    switch (locale) {
-      case 'en':
-        return (
-          <>
-            <h1>Users</h1>
-            <p>This is users page</p>
-          </>
-        );
-      case 'fi':
-        return (
-          <>
-            <h1>Käyttäjät</h1>
-            <p>Tämä on käyttäjäsivu</p>
-          </>
-        );
-      case 'sv':
-        return (
-          <>
-            <h1>Användare</h1>
-            <p>Detta är användare.. sak?</p>
-          </>
-        );
-    }
-  };
+  const { data: usersData, loading } = useUsersQuery({
+    skip: false,
+    variables: {
+      createPath: getPathBuilder(usersPathBuilder),
+    },
+  });
+
+  const users = (usersData?.users?.data as UserFieldsFragment[]) || [];
+
+  console.log(users);
+  const [selectedRows, setSelectedRows] = useState([]);
+
   return (
     <PageWrapper
       description="helpPage.pageDescriptionInstructions"
       keywords={['keywords.support', 'keywords.help', 'keywords.instructions']}
       title="helpPage.pageTitleInstructions"
     >
-      {getContent(locale)}
+      <h1>{t('adminPage.sideNavigation.users')}</h1>
+      {!loading && (
+        <div>
+          <Table
+            checkboxSelection
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            heading="Foo"
+            id="checkbox-selection"
+            indexKey="id"
+            renderIndexCol={false}
+            cols={cols}
+            rows={users}
+            selectAllRowsText="Select all rows"
+            clearSelectionsText="Clear selections"
+            ariaLabelCheckboxSelection="Row selection"
+            variant="light"
+          />
+        </div>
+      )}
+      {/* <IconAngleDown aria-hidden /> */}
     </PageWrapper>
   );
 };

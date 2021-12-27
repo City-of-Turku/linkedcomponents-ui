@@ -13,6 +13,11 @@ export const userPathBuilder = ({
   return `/user/${id}/`;
 };
 
+export const usersPathBuilder =
+  ({}: PathBuilderProps<UserQueryVariables>): string => {
+    return `/user/`;
+  };
+
 export const getUserFields = (user: UserFieldsFragment): UserFields => ({
   adminOrganizations: user.adminOrganizations,
   isStaff: user.isStaff || false,

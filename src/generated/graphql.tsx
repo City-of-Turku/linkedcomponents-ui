@@ -95,6 +95,7 @@ export type Query = {
   place: Place;
   places: PlacesResponse;
   user: User;
+  users: UsersResponse;
 };
 
 
@@ -209,6 +210,11 @@ export type QueryPlacesArgs = {
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  page?: Maybe<Scalars['Int']>;
 };
 
 export enum EventStatus {
@@ -639,6 +645,12 @@ export type User = {
   organizationMemberships: Array<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   uuid?: Maybe<Scalars['String']>;
+};
+
+export type UsersResponse = {
+  __typename?: 'UsersResponse';
+  meta: Meta;
+  data: Array<Maybe<User>>;
 };
 
 export type Video = {
@@ -1236,6 +1248,26 @@ export type UserQuery = (
   & { user: (
     { __typename?: 'User' }
     & UserFieldsFragment
+  ) }
+);
+
+export type UsersQueryVariables = Exact<{
+  createPath?: Maybe<Scalars['Any']>;
+  page?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type UsersQuery = (
+  { __typename?: 'Query' }
+  & { users: (
+    { __typename?: 'UsersResponse' }
+    & { meta: (
+      { __typename?: 'Meta' }
+      & MetaFieldsFragment
+    ), data: Array<Maybe<(
+      { __typename?: 'User' }
+      & UserFieldsFragment
+    )>> }
   ) }
 );
 
@@ -2450,3 +2482,45 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const UsersDocument = gql`
+    query Users($createPath: Any, $page: Int) {
+  users(page: $page) @rest(type: "UsersResponse", pathBuilder: $createPath) {
+    meta {
+      ...metaFields
+    }
+    data {
+      ...userFields
+    }
+  }
+}
+    ${MetaFieldsFragmentDoc}
+${UserFieldsFragmentDoc}`;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      createPath: // value for 'createPath'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+      }
+export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
