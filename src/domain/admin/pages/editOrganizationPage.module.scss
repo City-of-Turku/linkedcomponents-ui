@@ -1,0 +1,16 @@
+@import 'breakpoints';
+
+.saveButtonContainer {
+  @include medium-up {
+    display: flex;
+    justify-self: flex-end;
+  }
+}
+
+.saveButton {
+  margin-top: var(--spacing-3-xl);
+}
+
+.text {
+  font-size: var(--fontsize-body-xl);
+}

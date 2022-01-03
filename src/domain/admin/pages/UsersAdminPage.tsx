@@ -1,13 +1,31 @@
-import { Table } from 'hds-react';
+import { IconPlus, Table } from 'hds-react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
+import Button from '../../../common/components/button/Button';
+import { ROUTES } from '../../../constants';
 import { UserFieldsFragment, useUsersQuery } from '../../../generated/graphql';
+import useLocale from '../../../hooks/useLocale';
 import getPathBuilder from '../../../utils/getPathBuilder';
+import Container from '../../app/layout/Container';
 import PageWrapper from '../../app/layout/PageWrapper';
 import { usersPathBuilder } from '../../user/utils';
+import styles from './usersAdminPage.module.scss';
 
 const UsersAdminPage: React.FC = () => {
+  const history = useHistory();
+  const locale = useLocale();
+  const goToEditUserPage = (userId: string) => {
+    history.push({
+      pathname: `/${locale}${ROUTES.ADMIN_EDIT_USER.replace(':id', userId)}`,
+    });
+  };
+  const goToCreateUserPage = () => {
+    history.push({
+      pathname: `/${locale}${ROUTES.ADMIN_CREATE_USER}`,
+    });
+  };
   const { t } = useTranslation();
   const cols = [
     { key: 'id', headerName: 'Not rendered' },
@@ -15,12 +33,12 @@ const UsersAdminPage: React.FC = () => {
     { key: 'email', headerName: 'E-Mail', isSortable: true },
     { key: 'firstName', headerName: 'First name', isSortable: true },
     { key: 'lastName', headerName: 'Last name', isSortable: true },
-    // TODO: Rooli. Mistä pitäisi päätellä? Ei määritelty.
+    // TODO: Role. How should we decide this? Not specified.
     {
-      key: '',
+      key: 'uuid',
       headerName: '',
-      transform: () => {
-        return <button>Muokkaa</button>;
+      transform: ({ uuid }: { uuid: string }) => {
+        return <button onClick={() => goToEditUserPage(uuid)}>Muokkaa</button>;
       },
     },
   ];
@@ -34,7 +52,6 @@ const UsersAdminPage: React.FC = () => {
 
   const users = (usersData?.users?.data as UserFieldsFragment[]) || [];
 
-  console.log(users);
   const [selectedRows, setSelectedRows] = useState([]);
 
   return (
@@ -44,13 +61,27 @@ const UsersAdminPage: React.FC = () => {
       title="helpPage.pageTitleInstructions"
     >
       <h1>{t('adminPage.sideNavigation.users')}</h1>
+      {/* <Container contentWrapperClassName={styles.headerContainer}>
+        <Button
+          className={styles.ctaButton}
+          fullWidth={true}
+          iconLeft={<IconPlus aria-hidden={true} />}
+          onClick={goToCreateUserPage}
+          variant="primary"
+        >
+          Lisää käyttäjä
+        </Button>
+      </Container> */}
+
+      <div className={styles.buttonWrapper}></div>
       {!loading && (
         <div>
           <Table
-            checkboxSelection
+            // TODO: We currently do not have any batch actions, so we'll remove this for now.
+            // checkboxSelection
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
-            heading="Foo"
+            heading=" "
             id="checkbox-selection"
             indexKey="id"
             renderIndexCol={false}
@@ -63,7 +94,6 @@ const UsersAdminPage: React.FC = () => {
           />
         </div>
       )}
-      {/* <IconAngleDown aria-hidden /> */}
     </PageWrapper>
   );
 };

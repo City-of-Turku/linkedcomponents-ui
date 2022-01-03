@@ -15,6 +15,7 @@ module.exports = buildSchema(/* GraphQL */ `
     updateEvents(input: [UpdateEventMutationInput!]!): [Event!]!
     updateImage(input: UpdateImageMutationInput!): Image!
     uploadImage(input: UploadImageMutationInput!): Image!
+    createUser(input: CreateUserMutationInput!): User!
   }
 
   type NoContent {
@@ -234,6 +235,10 @@ module.exports = buildSchema(/* GraphQL */ `
     photographerName: String
     publisher: String
     url: String
+  }
+
+  input CreateUserMutationInput {
+    username: String
   }
 
   type EventsResponse {
