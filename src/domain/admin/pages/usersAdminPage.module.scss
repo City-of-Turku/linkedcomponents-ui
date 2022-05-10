@@ -1,0 +1,68 @@
+@import 'breakpoints';
+@import 'widths';
+
+.ctaButton {
+  --landing-page-cta-button-background-color: var(--color-coat-of-arms);
+  --landing-page-cta-button-background-color-hover: var(
+    --color-coat-of-arms-dark
+  );
+  --landing-page-cta-button-background-color-focus: var(--color-coat-of-arms);
+  --landing-page-cta-button-background-color-hover-focus: var(
+    --color-coat-of-arms-dark
+  );
+  --landing-page-cta-button-border-color: var(--color-coat-of-arms);
+  --landing-page-cta-button-border-color-hover: var(--color-coat-of-arms-dark);
+  --landing-page-cta-button-border-color-focus: var(--color-coat-of-arms);
+  --landing-page-cta-button-border-color-hover-focus: var(
+    --color-coat-of-arms-dark
+  );
+  --landing-page-cta-button-color: var(--color-white);
+  --landing-page-cta-button-focus-outline-color: var(--color-coat-of-arms);
+
+  --landing-page-search-button-background-color: transparent;
+  --landing-page-search-button-background-color-hover: var(
+    --color-coat-of-arms-dark
+  );
+  --landing-page-search-button-background-color-focus: var(
+    --color-coat-of-arms
+  );
+  --landing-page-search-button-background-color-hover-focus: var(
+    --color-coat-of-arms-dark
+  );
+  --landing-page-search-button-border-color: var(--color-white);
+  --landing-page-search-button-color: var(--color-white);
+  --landing-page-search-button-focus-outline-color: var(--color-white);
+  --background-color: var(--landing-page-cta-button-background-color);
+  --background-color-hover: var(
+    --landing-page-cta-button-background-color-hover
+  );
+  --background-color-focus: var(
+    --landing-page-cta-button-background-color-focus
+  );
+  --background-color-hover-focus: var(
+    --landing-page-cta-button-background-color-hover-focus
+  );
+  --border-color: var(--landing-page-cta-button-border-color);
+  --border-color-hover: var(--landing-page-cta-button-border-color-hover);
+  --border-color-focus: var(--landing-page-cta-button-border-color-focus);
+  --border-color-hover-focus: var(
+    --landing-page-cta-button-border-color-hover-focus
+  );
+  --color: var(--landing-page-cta-button-color);
+  --color-hover: var(--landing-page-cta-button-color);
+  --color-focus: var(--landing-page-cta-button-color);
+  --color-hover-focus: var(--landing-page-cta-button-color);
+  --focus-outline-color: var(--landing-page-cta-button-focus-outline-color);
+}
+
+.buttonWrapper {
+  padding: 0;
+  @include min-width-column(2);
+}
+
+.headerContainer {
+  @include medium-up {
+    display: flex;
+    justify-self: flex-end;
+  }
+}

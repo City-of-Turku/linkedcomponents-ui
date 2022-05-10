@@ -1040,6 +1040,14 @@
       "toggleButtonLabel": "Navigera till hjälpsidan"
     }
   },
+  "adminPage": {
+    "sideNavigation": {
+      "administration": "Administration",
+      "organizations": "Organisationer",
+      "users": "Användare",
+      "toggleButtonLabel": "Navigera till adminsidan"
+    }
+  },
   "image": {
     "warningLogInToUpdate": "Logga in för att redigera den här bilden.",
     "warningLogInToUpload": "Logga in för att lägga till bilder.",
@@ -1114,7 +1122,8 @@
     "skipToContentLabel": "Gå till innehållet",
     "tabs": {
       "events": "Evenemang",
-      "help": "Stöd"
+      "help": "Stöd",
+      "admin": "Administration"
     }
   },
   "notFound": {

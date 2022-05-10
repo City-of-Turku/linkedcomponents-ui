@@ -12,6 +12,7 @@ import {
   Organization,
   Place,
   Position,
+  User,
 } from '../../../generated/graphql';
 
 export const addTypenameDivision = (
@@ -169,5 +170,13 @@ export const addTypenamePosition = (
     ? {
         ...position,
         __typename: 'Position',
+      }
+    : null;
+
+export const addTypenameUser = (user?: User | null): User | null =>
+  user
+    ? {
+        ...user,
+        __typename: 'User',
       }
     : null;

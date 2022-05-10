@@ -4,6 +4,7 @@ import { Redirect, Route, RouteComponentProps, Switch } from 'react-router';
 
 import { DEPRECATED_ROUTES, ROUTES } from '../../../constants';
 import { Language } from '../../../types';
+import AdminPageLayout from '../../admin/layout/AdminPageLayout';
 import EventSavedPage from '../../eventSaved/EventSavedPage';
 import HelpPageLayout from '../../help/layout/HelpPageLayout';
 import LogoutPage from '.././../auth/logoutPage/LogoutPage';
@@ -20,6 +21,7 @@ const EventSearchPage = React.lazy(
   () => import('../../eventSearch/EventSearchPage')
 );
 const HelpPageRoutes = React.lazy(() => import('./HelpPageRoutes'));
+const AdminPageRoutes = React.lazy(() => import('./AdminPageRoutes'));
 
 interface Params {
   locale: Language;
@@ -105,6 +107,11 @@ const LocaleRoutes: React.FC<Props> = ({
             <HelpPageLayout>
               <HelpPageRoutes locale={locale} />
             </HelpPageLayout>
+          </Route>
+          <Route path={getLocalePath(ROUTES.ADMIN)}>
+            <AdminPageLayout>
+              <AdminPageRoutes locale={locale} />
+            </AdminPageLayout>
           </Route>
           <Route component={NotFound} />
         </Switch>

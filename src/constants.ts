@@ -19,6 +19,12 @@ export enum DEPRECATED_ROUTES {
 }
 
 export enum ROUTES {
+  ADMIN = '/admin',
+  ADMIN_ORGANIZATIONS = '/admin/organizations',
+  ADMIN_USERS = '/admin/users',
+  ADMIN_EDIT_USER = '/admin/users/edit/:id',
+  ADMIN_EDIT_ORGANIZATION = '/admin/organizations/edit/:id',
+  ADMIN_CREATE_USER = '/admin/users/create',
   CALLBACK = '/callback',
   CREATE_EVENT = '/events/create',
   EDIT_EVENT = '/events/edit/:id',
@@ -130,6 +136,10 @@ export const NAVIGATION_ITEMS = [
   {
     labelKey: 'navigation.tabs.help',
     url: ROUTES.HELP,
+  },
+  {
+    labelKey: 'navigation.tabs.admin',
+    url: ROUTES.ADMIN,
   },
 ];
 

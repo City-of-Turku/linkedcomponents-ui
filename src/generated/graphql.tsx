@@ -27,6 +27,7 @@ export type Mutation = {
   updateEvents: Array<Event>;
   updateImage: Image;
   uploadImage: Image;
+  createUser: User;
 };
 
 
@@ -74,6 +75,11 @@ export type MutationUploadImageArgs = {
   input: UploadImageMutationInput;
 };
 
+
+export type MutationCreateUserArgs = {
+  input: CreateUserMutationInput;
+};
+
 export type NoContent = {
   __typename?: 'NoContent';
   noContent?: Maybe<Scalars['Boolean']>;
@@ -95,6 +101,7 @@ export type Query = {
   place: Place;
   places: PlacesResponse;
   user: User;
+  users: UsersResponse;
 };
 
 
@@ -209,6 +216,11 @@ export type QueryPlacesArgs = {
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  page?: Maybe<Scalars['Int']>;
 };
 
 export enum EventStatus {
@@ -353,6 +365,10 @@ export type UploadImageMutationInput = {
   photographerName?: Maybe<Scalars['String']>;
   publisher?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type CreateUserMutationInput = {
+  username?: Maybe<Scalars['String']>;
 };
 
 export type EventsResponse = {
@@ -639,6 +655,12 @@ export type User = {
   organizationMemberships: Array<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   uuid?: Maybe<Scalars['String']>;
+};
+
+export type UsersResponse = {
+  __typename?: 'UsersResponse';
+  meta: Meta;
+  data: Array<Maybe<User>>;
 };
 
 export type Video = {
@@ -1220,6 +1242,19 @@ export type PlacesQuery = (
   ) }
 );
 
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserMutationInput;
+}>;
+
+
+export type CreateUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser: (
+    { __typename?: 'User' }
+    & UserFieldsFragment
+  ) }
+);
+
 export type UserFieldsFragment = (
   { __typename?: 'User' }
   & Pick<User, 'adminOrganizations' | 'dateJoined' | 'departmentName' | 'displayName' | 'email' | 'firstName' | 'isStaff' | 'lastLogin' | 'lastName' | 'organization' | 'organizationMemberships' | 'username' | 'uuid'>
@@ -1236,6 +1271,26 @@ export type UserQuery = (
   & { user: (
     { __typename?: 'User' }
     & UserFieldsFragment
+  ) }
+);
+
+export type UsersQueryVariables = Exact<{
+  createPath?: Maybe<Scalars['Any']>;
+  page?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type UsersQuery = (
+  { __typename?: 'Query' }
+  & { users: (
+    { __typename?: 'UsersResponse' }
+    & { meta: (
+      { __typename?: 'Meta' }
+      & MetaFieldsFragment
+    ), data: Array<Maybe<(
+      { __typename?: 'User' }
+      & UserFieldsFragment
+    )>> }
   ) }
 );
 
@@ -2414,6 +2469,39 @@ export function usePlacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pla
 export type PlacesQueryHookResult = ReturnType<typeof usePlacesQuery>;
 export type PlacesLazyQueryHookResult = ReturnType<typeof usePlacesLazyQuery>;
 export type PlacesQueryResult = Apollo.QueryResult<PlacesQuery, PlacesQueryVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($input: CreateUserMutationInput!) {
+  createUser(input: $input) @rest(type: "User", path: "/user/", method: "POST", bodyKey: "input") {
+    ...userFields
+  }
+}
+    ${UserFieldsFragmentDoc}`;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const UserDocument = gql`
     query User($id: ID!, $createPath: Any) {
   user(id: $id) @rest(type: "User", pathBuilder: $createPath) {
@@ -2450,3 +2538,45 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const UsersDocument = gql`
+    query Users($createPath: Any, $page: Int) {
+  users(page: $page) @rest(type: "UsersResponse", pathBuilder: $createPath) {
+    meta {
+      ...metaFields
+    }
+    data {
+      ...userFields
+    }
+  }
+}
+    ${MetaFieldsFragmentDoc}
+${UserFieldsFragmentDoc}`;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      createPath: // value for 'createPath'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+      }
+export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;

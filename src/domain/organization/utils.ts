@@ -15,7 +15,8 @@ import {
 import { PathBuilderProps } from '../../types';
 import getPathBuilder from '../../utils/getPathBuilder';
 import queryBuilder from '../../utils/queryBuilder';
-import { OrganizationFields } from './types';
+import { ORGANIZATION_INITIAL_VALUES } from './constants';
+import { OrganizationFields, OrganizationFormFields } from './types';
 
 export const organizationPathBuilder = ({
   args,
@@ -118,4 +119,13 @@ export const getOrganizationAncestorsQueryResult = async (
   } catch (e) {
     return [];
   }
+};
+
+export const getOrganizationInitialValues = (
+  organization: OrganizationFieldsFragment
+): OrganizationFormFields => {
+  return {
+    ...ORGANIZATION_INITIAL_VALUES,
+    name: organization?.name,
+  };
 };

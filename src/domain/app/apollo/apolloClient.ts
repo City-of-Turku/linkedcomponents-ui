@@ -30,6 +30,7 @@ import {
   Place,
   PlacesResponse,
   UploadImageMutationInput,
+  UsersResponse,
 } from '../../../generated/graphql';
 import { normalizeKey } from '../../../utils/apolloUtils';
 import generateAtId from '../../../utils/generateAtId';
@@ -45,6 +46,7 @@ import {
   addTypenameMeta,
   addTypenameOrganization,
   addTypenamePlace,
+  addTypenameUser,
 } from './utils';
 
 // This serializer is needed to send image upload data to API as multipart/form-data content.
@@ -260,6 +262,12 @@ const linkedEventsLink = new RestLink({
     PlacesResponse: (data: PlacesResponse): PlacesResponse => {
       data.meta = addTypenameMeta(data.meta);
       data.data = data.data.map((place) => addTypenamePlace(place));
+
+      return data;
+    },
+    UsersResponse: (data: UsersResponse): UsersResponse => {
+      data.meta = addTypenameMeta(data.meta);
+      data.data = data.data.map((user) => addTypenameUser(user));
 
       return data;
     },

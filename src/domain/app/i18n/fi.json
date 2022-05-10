@@ -1040,6 +1040,14 @@
       "toggleButtonLabel": "Siirry ohjesivulle"
     }
   },
+  "adminPage": {
+    "sideNavigation": {
+      "administration": "Hallinta",
+      "organizations": "Organisaatiot",
+      "users": "Käyttäjät",
+      "toggleButtonLabel": "Siirry hallintasivulle"
+    }
+  },
   "image": {
     "warningLogInToUpdate": "Kirjaudu sisään muokataksesi kuvaa.",
     "warningLogInToUpload": "Kirjaudu sisään lisätäksesi kuvia.",
@@ -1114,7 +1122,8 @@
     "skipToContentLabel": "Siirry sisältöön",
     "tabs": {
       "events": "Tapahtumat",
-      "help": "Tuki"
+      "help": "Tuki",
+      "admin": "Hallinta"
     }
   },
   "notFound": {

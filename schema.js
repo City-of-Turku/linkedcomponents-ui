@@ -15,6 +15,7 @@ module.exports = buildSchema(/* GraphQL */ `
     updateEvents(input: [UpdateEventMutationInput!]!): [Event!]!
     updateImage(input: UpdateImageMutationInput!): Image!
     uploadImage(input: UploadImageMutationInput!): Image!
+    createUser(input: CreateUserMutationInput!): User!
   }
 
   type NoContent {
@@ -89,6 +90,7 @@ module.exports = buildSchema(/* GraphQL */ `
       text: String
     ): PlacesResponse!
     user(id: ID!): User!
+    users(page: Int): UsersResponse!
   }
 
   enum EventStatus {
@@ -233,6 +235,10 @@ module.exports = buildSchema(/* GraphQL */ `
     photographerName: String
     publisher: String
     url: String
+  }
+
+  input CreateUserMutationInput {
+    username: String
   }
 
   type EventsResponse {
@@ -514,6 +520,11 @@ module.exports = buildSchema(/* GraphQL */ `
     organizationMemberships: [String!]!
     username: String
     uuid: String
+  }
+
+  type UsersResponse {
+    meta: Meta!
+    data: [User]!
   }
 
   type Video {
